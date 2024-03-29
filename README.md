@@ -1,10 +1,10 @@
-# SAFE Template
+# Nutrition Calculator
 
-This template can be used to generate a full-stack web application using the [SAFE Stack](https://safe-stack.github.io/). It was created using the dotnet [SAFE Template](https://safe-stack.github.io/docs/template-overview/). If you want to learn more about the template why not start with the [quick start](https://safe-stack.github.io/docs/quickstart/) guide?
+This is a simple nutrition calculator application. It is built in F# using the [SAFE Stack](https://safe-stack.github.io/) (Saturn/Fable/Elmish) and uses the [Nutritionix](https://www.nutritionix.com/) API for nutrition information.
 
 ## Install pre-requisites
 
-You'll need to install the following pre-requisites in order to build SAFE applications
+You'll need to install the following pre-requisites in order to build the application.
 
 * [.NET SDK](https://www.microsoft.com/net/download) 8.0 or higher
 * [Node 18](https://nodejs.org/en/download/) or higher
@@ -43,12 +43,24 @@ dotnet run -- Bundle
 dotnet run -- Azure
 ```
 
-## SAFE Stack Documentation
+## Secrets Configuration
 
-If you want to know more about the full Azure Stack and all of it's components (including Azure) visit the official [SAFE documentation](https://safe-stack.github.io/docs/).
+The application expects two secrets to be configured at `NutritionApi:AppId` and `NutritionApi:AppKey`. There are a couple different ways to do so for local development.
 
-You will find more documentation about the used F# components at the following places:
+### User Secrets
 
-* [Saturn](https://saturnframework.org/)
-* [Fable](https://fable.io/docs/)
-* [Elmish](https://elmish.github.io/elmish/)
+The simplest is to use [User Secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-8.0&tabs=linux).
+
+Using the .NET SDK you can set the user secrets like this:
+```
+dotnet user-secrets set "NutritionApi:AppId" "<secret>"
+dotnet user-secrets set "NutritionApi:AppKey" "<secret>"
+```
+
+### Environment Variables
+
+You can also specify the secrets using environment variables, which is how the application is configured when it is deployed. The environment variables will be in the format `NutritionApi__AppId` and `NutritionApi__AppKey`.
+
+### `appsettings.json` / `launch.json`
+
+**Danger** - If you need a quick way to configure the secrets you can add them directly to the `appsettings.json` file or as environment variables in `.vscode/launch.json`, but take extra care to **remove them before committing** since these files are included in the repository.
